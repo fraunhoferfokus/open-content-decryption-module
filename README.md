@@ -84,6 +84,10 @@ In practice the Pepper Plugin API based OCDM implementation can be launched as f
 
 Navigate the folders and see the readme files for further information.
 
+## How to contribute
+
+See the [wiki](https://github.com/fraunhoferfokus/open-content-decryption-module/wiki) for information on how to contribute to this project.
+
 ## Known Issues / Comments
 
 This is a preliminary version of OCDM. Please file any issues or comments.
