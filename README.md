@@ -32,7 +32,7 @@ Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) accordi
 
 ## Supported Browsers and Platforms
 
-Currently OCDM is integrated and tested with following Web browers:
+Currently OCDM development is targeted for following Web browers:
 
 * chromium
  * linux
@@ -40,6 +40,8 @@ Currently OCDM is integrated and tested with following Web browers:
  * linux
 * QtWebengine
  * linux 
+
+For more details see the [milestones](https://github.com/fraunhoferfokus/open-content-decryption-module/milestones) page.
 
 ## How to build
 
