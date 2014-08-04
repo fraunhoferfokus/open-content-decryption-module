@@ -4,7 +4,7 @@ The Open Content Decryption Module (OCDM) is a Content Decryption Module (CDM) a
 OCDM is built with a modular concept in mind to be easily extendible and flexible. The open source code already provides support for the CDMi specification [4], which essentially requires the CDM to use the operating system's native RPC mechanisms to forward EME calls to the CDMi.
 Furthermore, the media sample transmission between a browser decoupled media engine and the CDMi can be secured via a DRM-specific authenticated interface. The CDMi itself contains most CDM logic and is a c++ wrapper for the embedded platform DRM.
 
-Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) according to W3C EME specification to be used with HTML5 based browser environments. The implementation enables DRM interoperability. We would be happy to see a broad adoption of our implementation and encourage contributions. A first e2e implementation has been done testing with a Microsoft PlayReady CDM.
+Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) according to W3C EME specification to be used with HTML5 based browser environments. The implementation enables DRM interoperability. We would be happy to see a broad adoption of our implementation and encourage contributions. A first e2e implementation has been done testing with a Microsoft PlayReady CDMi implementation.
 
 ## Introduction / Purpose / Why this?
 
@@ -32,7 +32,7 @@ Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) accordi
 
 ## Supported Browsers and Platforms
 
-Currently OCDM is integrated and tested with following Web browers:
+Currently OCDM development is targeted for following Web browers:
 
 * chromium
  * linux
@@ -40,6 +40,8 @@ Currently OCDM is integrated and tested with following Web browers:
  * linux
 * QtWebengine
  * linux 
+
+For more details see the [milestones](https://github.com/fraunhoferfokus/open-content-decryption-module/milestones) page.
 
 ## How to build
 
@@ -81,6 +83,10 @@ In practice the Pepper Plugin API based OCDM implementation can be launched as f
 ## Folder Structure
 
 Navigate the folders and see the readme files for further information.
+
+## How to contribute
+
+See the [wiki](https://github.com/fraunhoferfokus/open-content-decryption-module/wiki) for information on how to contribute to this project.
 
 ## Known Issues / Comments
 
