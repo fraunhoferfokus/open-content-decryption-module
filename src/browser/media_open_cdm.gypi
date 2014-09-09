@@ -1,5 +1,25 @@
-# Copyright (c) 2014 Fraunhofer FOKUS. All rights reserved.
-# Use of this source code is governed by a [tda] license that can be
+#
+# Copyright 2014 Fraunhofer FOKUS
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Based on file contibuted to the Chromium project
+# media/media_cdm.gypi
+# License notice of original file:
+
+# Copyright 2013 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
 {
@@ -12,37 +32,28 @@
         'use_ffmpeg%': 1,
       }],
     ],
-    # Set |use_fake_video_decoder| to 1 to ignore input frames in |clearkeycdm|,
-    # and produce video frames filled with a solid color instead.
-    'use_fake_video_decoder%': 0,
-    # Set |use_libvpx| to 1 to use libvpx for VP8 decoding in |clearkeycdm|.
-    'use_libvpx%': 0,
   },
   'conditions': [
     ['enable_pepper_cdms==1', {
       'targets': [
         {
-          'target_name': 'open_cdm',
+          'target_name': 'opencdm',
           'type': 'none',
           'conditions': [
             ['use_ffmpeg == 1'  , {
-              'defines': ['OPEN_CDM_USE_FFMPEG_DECODER'],
+              'defines': ['OCDM_USE_FFMPEG_DECODER', 'CLEAR_KEY_CDM_USE_FFMPEG_DECODER'],
               'dependencies': [
                 '<(DEPTH)/third_party/ffmpeg/ffmpeg.gyp:ffmpeg',
               ],
               'sources': [
-                #'cdm/ppapi/external_clear_key/ffmpeg_cdm_audio_decoder.cc',
-                #'cdm/ppapi/external_clear_key/ffmpeg_cdm_audio_decoder.h',
-                #'../decoupled_decoder/open_cdm_ffmpeg_audio_decoder.cc',
-                #'../decoupled_decoder/open_cdm_ffmpeg_audio_decoder.h',
+                '<(DEPTH)/media/cdm/ppapi/external_clear_key/ffmpeg_cdm_audio_decoder.cc',
+                '<(DEPTH)/media/cdm/ppapi/external_clear_key/ffmpeg_cdm_audio_decoder.h',
               ],
             }],
             ['use_ffmpeg == 1'  , {
               'sources': [
-                #'cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.cc',
-                #'cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.h',
-                #'../decoupled_decoder/open_cdm_ffmpeg_video_decoder.cc',
-                #'../decoupled_decoder/open_cdm_ffmpeg_video_decoder.h',
+                '<(DEPTH)/media/cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.cc',
+                '<(DEPTH)/media/cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.h',
               ],
             }],
             ['os_posix == 1 and OS != "mac" and enable_pepper_cdms==1', {
@@ -66,45 +77,59 @@
             '<(DEPTH)/base/base.gyp:base',
           ],
           'sources': [
-            '../com/common/rpc/cdmxdr.h',
-            '../com/common/rpc/cdmxdr_clnt.c',
-            '../com/common/rpc/cdmxdr_xdr.c',
-            '../cdm/cdm_platform_common.h',
-            '../cdm/cdm_platform_interface.h',
-            '../cdm/cdm_platform_interface_factory.h',
-            '../com/cdm/cdm_platform_interface_impl.cc',
-            '../com/cdm/cdm_platform_interface_impl.h',
+            '<(DEPTH)/media/cdm/ppapi/cdm_logging.cc',
+            '<(DEPTH)/media/cdm/ppapi/cdm_logging.h',
+            '../com/common/rpc/opencdm_xdr.h',
+            '../com/common/rpc/opencdm_xdr_clnt.c',
+            '../com/common/rpc/opencdm_xdr_xdr.c',
+            '../com/common/rpc/opencdm_callback.h',
+            '../com/common/rpc/opencdm_callback_xdr.c',
+            '../cdm/open_cdm_platform_common.h',
+            '../cdm/open_cdm_platform.h',
+            '../cdm/open_cdm_platform_com.h',
+            '../cdm/open_cdm_platform_factory.h',
+            '../cdm/open_cdm_platform_com_callback_receiver.h',
+            '../cdm/open_cdm_platform_impl.cc',
+            '../cdm/open_cdm_platform_impl.h',
+            '../com/cdm/open_cdm_platform_com_handler_factory.h',
+            '../com/cdm/rpc/rpc_cdm_platform_handler.h',
+            '../com/cdm/rpc/rpc_cdm_platform_handler.cc',
+            '../com/common/shmemsem/shmemsem_helper.cc',
+            '../com/common/shmemsem/shmemsem_helper.h',
+            '../mediaengine/open_cdm_mediaengine.h',
+            '../mediaengine/open_cdm_mediaengine_com.h',
+            '../mediaengine/open_cdm_mediaengine_factory.h',
+            '../mediaengine/open_cdm_mediaengine_impl.cc',
+            '../mediaengine/open_cdm_mediaengine_impl.h',
+            '../com/mediaengine/rpc/rpc_cdm_mediaengine_handler.cc',
+            '../com/mediaengine/rpc/rpc_cdm_mediaengine_handler.h',
             '../browser/chrome/open_cdm.cc',
             '../browser/chrome/open_cdm.h',
-            '../browser/chrome/open_cdm_common.h',
-            '../browser/chrome/open_media_keys.cc',
-            '../browser/chrome/open_media_keys.h',
-            #'../cdmi/shmemsem/shmemsem_helper.cc',
-            #'../cdmi/shmemsem/shmemsem_helper.h',
-            #'../mediaengine/cdm_mediaengine_interface.h',
-            #'../com/mediaengine/cdm_mediaengine_interface_impl.cc',
-            #'../com/mediaengine/cdm_mediaengine_interface_impl.h',
+            '../browser/chrome/open_cdm_chrome_common.h',
+            '../common/open_cdm_common.h',
+            '<(DEPTH)/media/cdm/ppapi/external_clear_key/cdm_video_decoder.cc',
+            '<(DEPTH)/media/cdm/ppapi/external_clear_key/cdm_video_decoder.h',
           ],
           # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
           'msvs_disabled_warnings': [ 4267, ],
         },
         {
-          'target_name': 'open_cdmadapter',
+          'target_name': 'opencdmadapter',
           'type': 'none',
           # Check whether the plugin's origin URL is valid.
           'defines': ['CHECK_DOCUMENT_URL'],
           'dependencies': [
             '<(DEPTH)/ppapi/ppapi.gyp:ppapi_cpp',
             '<(DEPTH)/media/media_cdm_adapter.gyp:cdmadapter',
-            'open_cdm',
+            'opencdm',
           ],
           'conditions': [
             ['os_posix == 1 and OS != "mac" and enable_pepper_cdms==1', {
-              # Because open_cdm has type 'loadable_module' (see comments),
+              # Because opencdm has type 'loadable_module' (see comments),
               # we must explicitly specify this dependency.
               'libraries': [
-                # Built by open_cdm.
-                '<(PRODUCT_DIR)/libopen_cdm.so',
+                # Built by opencdm.
+                '<(PRODUCT_DIR)/libopencdm.so',
               ],
             }],
           ],

@@ -11,13 +11,9 @@ Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) accordi
 * Interoperable HTML5 based protected video delivery
 * DRM interoperability
   * CENC, DASH
-* plugin based integration (Pepper Plugin API)
-* [architecture figure]:
-   * EME, CDM, CDMi
+* Plugin based integration (Pepper Plugin API)
 * CDMi allows open source browsers to support DRM without licensing it
 * e2e tested with Microsoft PlayReady DRM system
-
-[tbd]
 
 ## References
 
@@ -27,28 +23,25 @@ Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) accordi
 * [4] Content Decryption Module Interface Specification http://download.microsoft.com/download/E/A/4/EA470677-6C3C-4AFE-8A86-A196ADFD0F78/Content%20Decryption%20Module%20Interface%20Specification.pdf
 * [5] Fraunhofer FOKUS FAMIUM DRM http://www.fokus.fraunhofer.de/en/fame/Solutions/DRM/index.html
 
-
-[tbd]
-
 ## Supported Browsers and Platforms
 
 Currently OCDM development is targeted for following Web browers:
 
-* chromium
- * linux
+* Chromium
+ * Linux
 * Opera
- * linux
-* QtWebengine
- * linux 
+ * Linux
+* QtWebengine (coming soon)
+ * Linux
 
 For more details see the [milestones](https://github.com/fraunhoferfokus/open-content-decryption-module/milestones) page.
 
 ## How to build
 
 ### ...as Pepper Plugin for Chromium
-* clone this repository, e.g. into ~/opencdm
+* clone this repository, e.g. into $HOME/opencdm
 * create the following symbolic link
- * ```$ ln -s ~opencdm/src $CHROMIUM_ROOT/src/media/cdm/ppapi/external_open_cdm```
+ * ```$ ln -s $HOME/opencdm/src $CHROMIUM_ROOT/src/media/cdm/ppapi/external_open_cdm```
 * add include into the ```$CHROMIUM_ROOT/src/media/media.gyp``` file to contain this:
 ```
   'includes': [
@@ -60,7 +53,7 @@ For more details see the [milestones](https://github.com/fraunhoferfokus/open-co
  * ```$ cd $CHROMIUM_ROOT/src```
  * ```$ build/gyp_chromium```
 * build the following target (please follow *[Build notes for Chromium](docs/build_notes_chromium.md)* section before building)
- * ```$ ninja -C out/Debug open_cdmadapter```
+ * ```$ ninja -C out/Debug opencdmadapter```
 
 ## How to run
 * integrate OCDM with your browser
@@ -74,12 +67,6 @@ In practice the Pepper Plugin API based OCDM implementation can be launched as f
 ./out/Debug/chrome --register-pepper-plugins="out/Debug/libopen_cdmadapter.so;application/x-ppapi-open-cdm"
 ```
 
-* To enable logging specify in addition:
-
-```
-./out/Debug/chrome --vmodule=ppb*=1 --enable-logging=stderr --register-pepper-plugins="out/Debug/libopen_cdmadapter.so;application/x-ppapi-open-cdm"
-```
-
 ## Folder Structure
 
 Navigate the folders and see the readme files for further information.
@@ -91,6 +78,10 @@ See the [wiki](https://github.com/fraunhoferfokus/open-content-decryption-module
 ## Known Issues / Comments
 
 This is a preliminary version of OCDM. Please file any issues or comments.
+
+* Chromium sandbox: Currently Chromium needs to be started with the --no-sandbox flag because of the current RPC mechanism.
+* Multiple session support is current work in progress.
+* Code needs more review from the community (e.g. memory allocation, appropriate data types).
 
 ## License
 

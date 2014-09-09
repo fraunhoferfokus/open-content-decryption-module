@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <script type="text/javascript">
+      function MediaKeys_isTypeSupported(keySystem) {
+        try {
+          if(typeof MediaKeys === "function" && MediaKeys.isTypeSupported(keySystem))
+          {
+            return 'success';
+          }else{
+            return 'NotSupportedError';
+          }
+        } catch (err) {
+          return err.name;
+        }
+      }
+    </script>
+  </body>
+</html>

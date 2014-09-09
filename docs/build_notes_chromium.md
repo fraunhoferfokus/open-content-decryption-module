@@ -8,17 +8,13 @@ Chromium supports three types of CDMs:
 
 Source: [David Dorwin, Feb 2014](https://groups.google.com/a/chromium.org/d/msg/chromium-dev/exotX6Nf_z0/UtMi4a2sLncJ)
 
-## Internal source integration notes
-
-[tbd]
-
 ## Pepper Plugin API (PPAPI) integration notes
 
 *Tested with version:*
-MAJOR=38
+MAJOR=37
 MINOR=0
 BUILD= **2041**
-PATCH=0
+PATCH=6
 
 ## Configuration
 
@@ -47,7 +43,7 @@ to be registered by adding and calling the following function:
 static void AddExternalOpenCdm(
     std::vector<KeySystemInfo>* concrete_key_systems) {
   static const char kExternalOpenCdmKeySystem[] =
-      "com.youdomainnamehere.yourcdmname";
+      "com.opencdm.mockdrm";
   static const char kExternalOpenCdmPepperType[] =
       "application/x-ppapi-open-cdm";
 
@@ -79,7 +75,3 @@ if defined(ENABLE_PEPPER_CDMS)
   AddExternalClearKey(key_systems_info);
   AddExternalOpenCdm(key_systems_info);
 ```
-
-## Platform based integration notes
-
-[tbd]
