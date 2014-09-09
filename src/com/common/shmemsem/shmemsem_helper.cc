@@ -1,12 +1,23 @@
 /*
-* Copyright (C) 2014, Fraunhofer Institute for Open Communication Systems FOKUS
-*/
+ * Copyright 2014 Fraunhofer FOKUS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /*
- * File:   shmemsem_helper.cpp
- * taken from Keith Gaughan - Shared Memory and Semaphores - March 22, 2003
+ * based on Keith Gaughan - Shared Memory and Semaphores - March 22, 2003
  */
-#include "./shmemsem_helper.h"
+#include "media/cdm/ppapi/external_open_cdm/com/common/shmemsem/shmemsem_helper.h"
 
 /**
  * Allocates a shared memory segment.
@@ -91,13 +102,11 @@ int CreateSemaphoreSet(int n, unsigned short* vals)
  */
 void DeleteSemaphoreSet(int id)
 {
-    //if (semctl(id, 0, IPC_RMID, NULL) == -1)
     if (semctl(id, 0, IPC_RMID, 0) == -1)
     {
         perror("Error releasing semaphore!");
         exit(EXIT_FAILURE);
     }
-    //std::cout << "semaphore " << id << " deleted" << std::endl;
 }
 
 /**
