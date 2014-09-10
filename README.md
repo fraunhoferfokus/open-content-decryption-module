@@ -64,7 +64,7 @@ For more details see the [milestones](https://github.com/fraunhoferfokus/open-co
 In practice the Pepper Plugin API based OCDM implementation can be launched as follows:
 
 ```
-./out/Debug/chrome --register-pepper-plugins="out/Debug/libopen_cdmadapter.so;application/x-ppapi-open-cdm"
+./out/Debug/chrome --register-pepper-plugins="out/Debug/libopencdmadapter.so;application/x-ppapi-open-cdm"
 ```
 
 ## Folder Structure
