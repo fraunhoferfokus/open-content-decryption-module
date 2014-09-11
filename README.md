@@ -59,7 +59,7 @@ For more details see the [milestones](https://github.com/fraunhoferfokus/open-co
 * integrate OCDM with your browser
  * example to be found in src/browser folder
 * setup communication to DRM system
- * sample code for this will be provided in the separate CDMi repository
+ * sample code for this is provided in the separate [Open Content Decryption Module CDMi](https://github.com/fraunhoferfokus/open-content-decryption-module-cdmi) repository
 
 In practice the Pepper Plugin API based OCDM implementation can be launched as follows:
 
