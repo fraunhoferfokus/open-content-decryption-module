@@ -15,6 +15,18 @@ Fraunhofer FOKUS has developed the Open Content Decryption Module (OCDM) accordi
 * CDMi allows open source browsers to support DRM without licensing it
 * e2e tested with Microsoft PlayReady DRM system
 
+## Scope
+
+OCDM is developed according to W3C EME. This leads to a architecture as shown in the figure below, which consists of a Web application, a browser and a DRM platform layer. The browser as mediator between Web application and DRM platform exposes the EME and contains a CDM. The Web application is connected to the browser via EME. EME is mapped by the browser to a CDM and the CDM communicates to the DRM platform.
+
+As EME is modelling only the license retrieval and management, there is a second component that needs to talk to the DRM platform. In many cases, mainly in embedded environments, the media engine is separate from the browser and used by the browser as external renderer. In this case the media engine probably needs to authenticate itself at the DRM platform for handling and decoding of protected media data.
+
+![Scope of OCDM](https://raw.githubusercontent.com/fraunhoferfokus/open-content-decryption-module/master/docs/img/ocdm_scope.png "Scope of OCDM") 
+
+On the one hand, the OCDM's scope includes the generic CDM and its communication interfaces to the DRM platform. On the other hand, there are separate media engine communication interfaces to the DRM platform. OCDM contains sample implementations for the RPC communication mechanism, but is designed highly modular to be easily extended with other communication mechanisms.
+
+For detailed internals of the OCDM architecture please refer to the [architecture notes](./docs/architecture_notes_ocdm.md).
+
 ## References
 
 * [1] W3C Encrypted Media Extensions https://dvcs.w3.org/hg/html-media/raw-file/default/encrypted-media/encrypted-media.html
@@ -98,3 +110,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+=======
