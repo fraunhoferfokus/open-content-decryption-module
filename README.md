@@ -21,7 +21,7 @@ OCDM is developed according to W3C EME. This leads to a architecture as shown in
 
 As EME is modelling only the license retrieval and management, there is a second component that needs to talk to the DRM platform. In many cases, mainly in embedded environments, the media engine is separate from the browser and used by the browser as external renderer. In this case the media engine probably needs to authenticate itself at the DRM platform for handling and decoding of protected media data.
 
-![Scope of OCDM](https://raw.githubusercontent.com/fraunhoferfokus/open-content-decryption-module/master/docs/img/ocdm_scope.png "Scope of OCDM") 
+![Scope of OCDM](https://raw.githubusercontent.com/fraunhoferfokus/open-content-decryption-module/master/docs/img/ocdm_scope.png "Scope of OCDM")
 
 On the one hand, the OCDM's scope includes the generic CDM and its communication interfaces to the DRM platform. On the other hand, there are separate media engine communication interfaces to the DRM platform. OCDM contains sample implementations for the RPC communication mechanism, but is designed highly modular to be easily extended with other communication mechanisms.
 
@@ -29,11 +29,11 @@ For detailed internals of the OCDM architecture please refer to the [architectur
 
 ## References
 
-* [1] W3C Encrypted Media Extensions https://dvcs.w3.org/hg/html-media/raw-file/default/encrypted-media/encrypted-media.html
-* [2] Interoperability Digital Rights Management and the Web http://www.fokus.fraunhofer.de/en/fame/_pdf/Interoperability_Digital_Rights_Management_and_the_Web.pdf
+* [1] W3C Encrypted Media Extensions https://w3c.github.io/encrypted-media
+* [2] Interoperability Digital Rights Management and the Web https://scrivito-public.s3-eu-west-1.amazonaws.com/fokus/64257f12b90b464b/64a4d370cf46918585d0276caa858eae/FAME_Interoperability_Digital_Rights_Management_and_the_Web_flyer.pdf
 * [3] MSE-EME Reference Platform Documentation https://html5.cablelabs.com/mse-eme/doc/overview.html
 * [4] Content Decryption Module Interface Specification http://download.microsoft.com/download/E/A/4/EA470677-6C3C-4AFE-8A86-A196ADFD0F78/Content%20Decryption%20Module%20Interface%20Specification.pdf
-* [5] Fraunhofer FOKUS FAMIUM DRM http://www.fokus.fraunhofer.de/en/fame/Solutions/DRM/index.html
+* [5] Fraunhofer FOKUS FAMIUM DRM http://www.fokus.fraunhofer.de/go/drm
 
 ## Supported Browsers and Platforms
 
