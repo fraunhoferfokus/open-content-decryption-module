@@ -34,6 +34,8 @@ class OpenCdmPlatformComCallbackReceiver {
   virtual void MessageCallback(OpenCdmPlatformSessionId platform_session_id,
                                std::string message,
                                std::string destination_url) = 0;
+  virtual void OnKeyStatusUpdateCallback(OpenCdmPlatformSessionId platform_session_id,
+                               std::string message) = 0;
   // TODO(ska): message should be uint8_t*
   virtual void ReadyCallback(OpenCdmPlatformSessionId platform_session_id) = 0;
 

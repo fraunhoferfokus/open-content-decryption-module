@@ -1,0 +1,52 @@
+diff --git a/chrome/renderer/media/chrome_key_systems.cc b/chrome/renderer/media/chrome_key_systems.cc
+index 63d4734..5f04240 100644
+--- a/chrome/renderer/media/chrome_key_systems.cc
++++ b/chrome/renderer/media/chrome_key_systems.cc
+@@ -48,6 +48,38 @@ static bool IsPepperCdmAvailable(
+   return is_available;
+ }
+
++// External Open CDM.
++static void AddExternalOpenCdm(
++    std::vector<KeySystemInfo>* concrete_key_systems) {
++  static const char kExternalOpenCdmKeySystem[] =
++      "com.opencdm.mockdrm";
++  static const char kExternalOpenCdmPepperType[] =
++      "application/x-ppapi-open-cdm";
++
++  std::vector<base::string16> additional_param_names;
++  std::vector<base::string16> additional_param_values;
++  if (!IsPepperCdmAvailable(kExternalOpenCdmPepperType,
++                             &additional_param_names,
++                             &additional_param_values)) {
++    return;
++  }
++
++  KeySystemInfo info;
++  info.key_system = kExternalOpenCdmKeySystem;
++  info.supported_codecs |= media::EME_CODEC_WEBM_ALL;
++  info.supported_init_data_types |= media::kInitDataTypeMaskWebM;
++  #if defined (USE_PROPRIETARY_CODECS)
++  info.supported_codecs |= media::EME_CODEC_MP4_ALL;
++  info.supported_init_data_types |= media::kInitDataTypeMaskCenc;
++  #endif
++
++
++  info.pepper_type = kExternalOpenCdmPepperType;
++
++  concrete_key_systems->push_back(info);
++}
++
++
+ // External Clear Key (used for testing).
+ static void AddExternalClearKey(
+     std::vector<KeySystemInfo>* concrete_key_systems) {
+@@ -216,7 +248,7 @@ static void AddPepperBasedWidevine(
+ void AddChromeKeySystems(std::vector<KeySystemInfo>* key_systems_info) {
+ #if defined(ENABLE_PEPPER_CDMS)
+   AddExternalClearKey(key_systems_info);
+-
++  AddExternalOpenCdm(key_systems_info);
+ #if defined(WIDEVINE_CDM_AVAILABLE)
+   AddPepperBasedWidevine(key_systems_info);
+ #endif  // defined(WIDEVINE_CDM_AVAILABLE)

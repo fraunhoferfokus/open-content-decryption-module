@@ -17,17 +17,26 @@ extern "C" {
 struct rpc_cb_message {
 	struct {
 		u_int session_id_len;
-		uint16_t *session_id_val;
+		char *session_id_val;
 	} session_id;
 	char *message;
 	char *destination_url;
 };
 typedef struct rpc_cb_message rpc_cb_message;
 
+struct rpc_cb_key_status_update {
+	struct {
+		u_int session_id_len;
+		char *session_id_val;
+	} session_id;
+	char *message;
+};
+typedef struct rpc_cb_key_status_update rpc_cb_key_status_update;
+
 struct rpc_cb_ready {
 	struct {
 		u_int session_id_len;
-		uint16_t *session_id_val;
+		char *session_id_val;
 	} session_id;
 };
 typedef struct rpc_cb_ready rpc_cb_ready;
@@ -35,7 +44,7 @@ typedef struct rpc_cb_ready rpc_cb_ready;
 struct rpc_cb_error {
 	struct {
 		u_int session_id_len;
-		uint16_t *session_id_val;
+		char *session_id_val;
 	} session_id;
 	int error;
 	char *error_message;
@@ -46,27 +55,33 @@ typedef struct rpc_cb_error rpc_cb_error;
 #define OPEN_CDM_EME_5 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define ON_MESSAGE 1
-extern  void * on_message_1(rpc_cb_message *, CLIENT *);
-extern  void * on_message_1_svc(rpc_cb_message *, struct svc_req *);
-#define ON_READY 2
-extern  void * on_ready_1(rpc_cb_ready *, CLIENT *);
-extern  void * on_ready_1_svc(rpc_cb_ready *, struct svc_req *);
-#define ON_ERROR 3
-extern  void * on_error_1(rpc_cb_error *, CLIENT *);
-extern  void * on_error_1_svc(rpc_cb_error *, struct svc_req *);
+#define ON_KEY_MESSAGE 1
+extern  void * on_key_message_1(rpc_cb_message *, CLIENT *);
+extern  void * on_key_message_1_svc(rpc_cb_message *, struct svc_req *);
+#define ON_KEY_READY 2
+extern  void * on_key_ready_1(rpc_cb_ready *, CLIENT *);
+extern  void * on_key_ready_1_svc(rpc_cb_ready *, struct svc_req *);
+#define ON_KEY_ERROR 3
+extern  void * on_key_error_1(rpc_cb_error *, CLIENT *);
+extern  void * on_key_error_1_svc(rpc_cb_error *, struct svc_req *);
+#define ON_KEY_STATUS_UPDATE 4
+extern  void * on_key_status_update_1(rpc_cb_key_status_update *, CLIENT *);
+extern  void * on_key_status_update_1_svc(rpc_cb_key_status_update *, struct svc_req *);
 extern int open_cdm_callback_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define ON_MESSAGE 1
-extern  void * on_message_1();
-extern  void * on_message_1_svc();
-#define ON_READY 2
-extern  void * on_ready_1();
-extern  void * on_ready_1_svc();
-#define ON_ERROR 3
-extern  void * on_error_1();
-extern  void * on_error_1_svc();
+#define ON_KEY_MESSAGE 1
+extern  void * on_key_message_1();
+extern  void * on_key_message_1_svc();
+#define ON_KEY_READY 2
+extern  void * on_key_ready_1();
+extern  void * on_key_ready_1_svc();
+#define ON_KEY_ERROR 3
+extern  void * on_key_error_1();
+extern  void * on_key_error_1_svc();
+#define ON_KEY_STATUS_UPDATE 4
+extern  void * on_key_status_update_1();
+extern  void * on_key_status_update_1_svc();
 extern int open_cdm_callback_1_freeresult ();
 #endif /* K&R C */
 
@@ -74,11 +89,13 @@ extern int open_cdm_callback_1_freeresult ();
 
 #if defined(__STDC__) || defined(__cplusplus)
 extern  bool_t xdr_rpc_cb_message (XDR *, rpc_cb_message*);
+extern  bool_t xdr_rpc_cb_key_status_update (XDR *, rpc_cb_key_status_update*);
 extern  bool_t xdr_rpc_cb_ready (XDR *, rpc_cb_ready*);
 extern  bool_t xdr_rpc_cb_error (XDR *, rpc_cb_error*);
 
 #else /* K&R C */
 extern bool_t xdr_rpc_cb_message ();
+extern bool_t xdr_rpc_cb_key_status_update ();
 extern bool_t xdr_rpc_cb_ready ();
 extern bool_t xdr_rpc_cb_error ();
 

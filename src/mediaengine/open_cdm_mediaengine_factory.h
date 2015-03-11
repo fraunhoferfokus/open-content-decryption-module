@@ -26,7 +26,9 @@
 
 namespace media {
 
-const std::string open_cdm_key_system = "com.opencdm.mockdrm";
+//const std::string open_cdm_key_system = "com.opencdm.mockdrm";
+const std::string open_cdm_key_system = "org.chromium.externalclearkey";
+
 // TODO(ska): outsource the mapping of key system string
 // to mediaengine and platform implementations
 
@@ -47,6 +49,7 @@ OpenCdmMediaengine *OpenCdmMediaengineFactory::Create(
     return new OpenCdmMediaengineImpl(session_id.session_id,
                                       session_id.session_id_len);
   } else {
+    CDM_DLOG() << "Failed to create MediaEngine";
     return NULL;
   }
 }
