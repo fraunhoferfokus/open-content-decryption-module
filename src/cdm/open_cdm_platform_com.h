@@ -38,27 +38,27 @@ class OpenCdmPlatformCom : public OpenCdmPlatform {
   // on errors tear down media keys and media key session objects
 
   // EME equivalent: new MediaKeys()
-  virtual MediaKeysResponse MediaKeys(std::string key_system) = 0;
+  MediaKeysResponse MediaKeys(std::string key_system) override;
 
   // EME equivalent: media_keys_.createSession()
-  virtual MediaKeysCreateSessionResponse MediaKeysCreateSession(
+  MediaKeysCreateSessionResponse MediaKeysCreateSession(
       const std::string& init_data_type, const uint8_t* init_data,
-      int init_data_length) = 0;
+      int init_data_length) override;
 
   // EME equivalent: media_keys_.loadSession()
-  virtual MediaKeysLoadSessionResponse MediaKeysLoadSession(
-      uint16_t *session_id_val, uint32_t session_id_len) = 0;
+  MediaKeysLoadSessionResponse MediaKeysLoadSession(
+      uint16_t *session_id_val, uint32_t session_id_len) override;
 
   // EME equivalent: media_key_session_.update()
-  virtual MediaKeySessionUpdateResponse MediaKeySessionUpdate(
+  MediaKeySessionUpdateResponse MediaKeySessionUpdate(
       const uint8 *pbKey, uint32 cbKey, uint16_t *session_id_val,
-      uint32_t session_id_len) = 0;
+      uint32_t session_id_len) override;
 
   // EME equivalent: media_key_session_.release()
-  virtual MediaKeySessionReleaseResponse MediaKeySessionRelease(
-      uint16_t *session_id_val, uint32_t session_id_len) = 0;
+  MediaKeySessionReleaseResponse MediaKeySessionRelease(
+      uint16_t *session_id_val, uint32_t session_id_len) override;
 
-  virtual ~OpenCdmPlatformCom() {
+  ~OpenCdmPlatformCom() override{
   }
   OpenCdmPlatformCom(OpenCdmPlatformComCallbackReceiver *callback_receiver_);
 
