@@ -37,13 +37,11 @@ For detailed internals of the OCDM architecture please refer to the [architectur
 
 ## Supported Browsers and Platforms
 
-Currently OCDM development is targeted for following Web browers:
+Currently OCDM development is compatible with following Web browers:
 
-* Chromium
+* Chromium / CEF
  * Linux
-* Opera
- * Linux
-* QtWebengine (coming soon)
+* Opera SDK
  * Linux
 
 For more details see the [milestones](https://github.com/fraunhoferfokus/open-content-decryption-module/milestones) page.
@@ -94,6 +92,8 @@ This is a preliminary version of OCDM. Please file any issues or comments.
 * Chromium sandbox: Currently Chromium needs to be started with the --no-sandbox flag because of the current RPC mechanism.
 * Multiple session support is current work in progress.
 * Code needs more review from the community (e.g. memory allocation, appropriate data types).
+
+For more details see the [milestones](https://github.com/fraunhoferfokus/open-content-decryption-module/milestones) page.
 
 ## License
 
