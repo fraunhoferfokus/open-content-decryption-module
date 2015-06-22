@@ -676,6 +676,8 @@ cdm::Status OpenCdm::DecryptToMediaDecoderBuffer(
   CopySubsamples(subsamples, kDstContainsClearBytes, out,
                  output->writable_data());
 
+  delete[] out;
+
   *decrypted_buffer = output;
   if (dr.platform_response == PLATFORM_CALL_SUCCESS) {
     return cdm::kSuccess;
