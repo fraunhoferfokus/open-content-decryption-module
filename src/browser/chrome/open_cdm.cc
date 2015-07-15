@@ -55,26 +55,7 @@ extern "C" {
 #include "base/path_service.h"
 #include "media/base/media.h"
 
-// Renewal message header. For prefixed EME, if a key message starts with
-// |kRenewalHeader|, it's a renewal message. Otherwise, it's a key request.
-// FIXME(jrummell): Remove this once prefixed EME goes away.
-const char kRenewalHeader[] = "RENEWAL";
 
-static const int64 kSecondsPerMinute = 60;
-static const int64 kMsPerSecond = 1000;
-static const int64 kInitialTimerDelayMs = 200;
-static const int64 kMaxTimerDelayMs = 1 * kSecondsPerMinute * kMsPerSecond;
-
-/* Currently we don't return the status from he CDMI if the keys are added.
- * Whenever there are no keys added we need
- * to make sure that the video decoder receives a kNoKey message instead
- * of an error. If we return an error, the video decoder will choke on
- * it and won' wait for the key to be added.
- *
- */
-static bool keysAddedToCdm = false;
-
-//const unsigned int kMaxOpenCDMSessionCount = 1;
 
 // TODO(tomfinegan): When COMPONENT_BUILD is not defined an AtExitManager must
 // exist before the call to InitializeFFmpegLibraries(). This should no longer
@@ -97,6 +78,27 @@ static bool InitializeFFmpegLibraries() {
 static bool g_ffmpeg_lib_initialized = InitializeFFmpegLibraries();
 
 #endif  // OCDM_USE_FFMPEG_DECODER
+
+// Renewal message header. For prefixed EME, if a key message starts with
+// |kRenewalHeader|, it's a renewal message. Otherwise, it's a key request.
+// FIXME(jrummell): Remove this once prefixed EME goes away.
+const char kRenewalHeader[] = "RENEWAL";
+
+static const int64 kSecondsPerMinute = 60;
+static const int64 kMsPerSecond = 1000;
+static const int64 kInitialTimerDelayMs = 200;
+static const int64 kMaxTimerDelayMs = 1 * kSecondsPerMinute * kMsPerSecond;
+
+/* Currently we don't return the status from he CDMI if the keys are added.
+ * Whenever there are no keys added we need
+ * to make sure that the video decoder receives a kNoKey message instead
+ * of an error. If we return an error, the video decoder will choke on
+ * it and won' wait for the key to be added.
+ *
+ */
+static bool keysAddedToCdm = false;
+
+//const unsigned int kMaxOpenCDMSessionCount = 1;
 
 static media::MediaKeys::SessionType ConvertSessionType(
     cdm::SessionType session_type) {
