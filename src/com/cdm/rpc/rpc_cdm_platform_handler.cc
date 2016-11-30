@@ -136,6 +136,21 @@ void RpcCdmPlatformHandler::OnMessage1SvcDelegate(rpc_cb_message *kmm, struct sv
   p_instance->OnMessage1Svc(kmm, rqstp);
 }
 
+void RpcCdmPlatformHandler::OnKeyStatusUpdate1SvcDelegate(
+    rpc_cb_key_status_update *kmm, struct svc_req *rqstp,
+    RpcCdmPlatformHandler *p_instance)
+{
+  CDM_DLOG() << "on_key_status_update_1_svc";
+  OpenCdmPlatformSessionId session_id;
+  std::string message = std::string(kmm->message);
+
+  session_id.session_id_len = kmm->session_id.session_id_len;
+  session_id.session_id = kmm->session_id.session_id_val;
+
+  p_instance->callback_receiver_->OnKeyStatusUpdateCallback(session_id, message);
+}
+
+
 void RpcCdmPlatformHandler::OnMessage1Svc(rpc_cb_message *kmm, struct svc_req *)
 {
   CDM_DLOG() << "on_key_message_1_svc";
@@ -213,22 +228,29 @@ void RpcCdmPlatformHandler::RpcCallbackPrivate(struct svc_req *rqstp, register S
     (void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
     return;
 
-  case ON_MESSAGE:
+  case ON_KEY_MESSAGE:
     _xdr_argument = (xdrproc_t) xdr_rpc_cb_message;
     _xdr_result = (xdrproc_t) xdr_void;
     local = (char *(*)(char *, struct svc_req *, RpcCdmPlatformHandler *)) RpcCdmPlatformHandler::OnMessage1SvcDelegate;
     break;
 
-  case ON_READY:
+  case ON_KEY_READY:
     _xdr_argument = (xdrproc_t) xdr_rpc_cb_ready;
     _xdr_result = (xdrproc_t) xdr_void;
     local = (char *(*)(char *, struct svc_req *, RpcCdmPlatformHandler *)) RpcCdmPlatformHandler::OnReady1SvcDelegate;
     break;
 
-  case ON_ERROR:
+  case ON_KEY_ERROR:
     _xdr_argument = (xdrproc_t) xdr_rpc_cb_error;
     _xdr_result = (xdrproc_t) xdr_void;
     local = (char *(*)(char *, struct svc_req *, RpcCdmPlatformHandler *)) RpcCdmPlatformHandler::OnError1SvcDelegate;
+    break;
+
+  case ON_KEY_STATUS_UPDATE:
+    _xdr_argument = (xdrproc_t) xdr_rpc_cb_key_status_update;
+    _xdr_result = (xdrproc_t) xdr_void;
+    local = (char *(*)(char *, struct svc_req *, RpcCdmPlatformHandler *))
+          RpcCdmPlatformHandler::OnKeyStatusUpdate1SvcDelegate;
     break;
 
   default:
@@ -398,7 +420,7 @@ MediaKeysCreateSessionResponse RpcCdmPlatformHandler::MediaKeysCreateSession(
 }
 
 MediaKeysLoadSessionResponse RpcCdmPlatformHandler::MediaKeysLoadSession(
-    uint16_t *session_id_val, uint32_t session_id_len) {
+    char *session_id_val, uint32_t session_id_len) {
   CDM_DLOG() << "RpcCdmPlatformHandler::MediaKeysLoadSession";
   MediaKeysLoadSessionResponse response;
 
@@ -433,7 +455,7 @@ MediaKeysLoadSessionResponse RpcCdmPlatformHandler::MediaKeysLoadSession(
 }
 
 MediaKeySessionUpdateResponse RpcCdmPlatformHandler::MediaKeySessionUpdate(
-    const uint8 *pbKey, uint32 cbKey, uint16_t *session_id_val,
+    const uint8 *pbKey, uint32 cbKey, char *session_id_val,
     uint32_t session_id_len) {
   CDM_DLOG() << "RpcCdmPlatformHandler::MediaKeySessionUpdate";
   MediaKeySessionUpdateResponse response;
@@ -472,7 +494,7 @@ MediaKeySessionUpdateResponse RpcCdmPlatformHandler::MediaKeySessionUpdate(
 }
 
 MediaKeySessionReleaseResponse RpcCdmPlatformHandler::MediaKeySessionRelease(
-    uint16_t *session_id_val, uint32_t session_id_len) {
+    char *session_id_val, uint32_t session_id_len) {
   CDM_DLOG() << "RpcCdmPlatformHandler::MediaKeySessionRelease";
   MediaKeySessionReleaseResponse response;
 

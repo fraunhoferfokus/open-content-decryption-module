@@ -41,7 +41,7 @@ struct MediaEngineSessionKey {
 };
 
 struct MediaEngineSessionId {
-  uint16_t *id;
+  char *id;
   uint32_t idLen;
 };
 
@@ -56,7 +56,7 @@ struct MediaEngineSessionId {
 /* MediaEngineSession is interface only */
 class OpenCdmMediaengine {
  public:
-  OpenCdmMediaengine(uint16_t *session_id_val, uint32_t session_id_len,
+  OpenCdmMediaengine(char *session_id_val, uint32_t session_id_len,
                      uint8_t * auth_data_val, uint32_t auth_data_len);
   virtual ~OpenCdmMediaengine() {
   }
@@ -66,7 +66,7 @@ class OpenCdmMediaengine {
                                   uint8_t *out, uint32_t &out_size) = 0;
 
  protected:
-  OpenCdmMediaengine(uint16_t *session_id_val, uint32_t session_id_len);
+  OpenCdmMediaengine(char *session_id_val, uint32_t session_id_len);
   OpenCdmMediaengine() {
   }
 };

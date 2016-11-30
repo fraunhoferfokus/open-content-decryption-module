@@ -47,7 +47,7 @@ MediaKeysCreateSessionResponse OpenCdmPlatformImpl::MediaKeysCreateSession(
 }
 
 MediaKeysLoadSessionResponse OpenCdmPlatformImpl::MediaKeysLoadSession(
-    uint16_t *session_id_val, uint32_t session_id_len) {
+    char *session_id_val, uint32_t session_id_len) {
   CDM_DLOG() << "OpenCdmPlatformCdmiImpl::MediaKeysLoadSession";
   MediaKeysLoadSessionResponse response;
 
@@ -57,7 +57,7 @@ MediaKeysLoadSessionResponse OpenCdmPlatformImpl::MediaKeysLoadSession(
 }
 
 MediaKeySessionUpdateResponse OpenCdmPlatformImpl::MediaKeySessionUpdate(
-    const uint8 *pbKey, uint32 cbKey, uint16_t *session_id_val,
+    const uint8 *pbKey, uint32 cbKey, char *session_id_val,
     uint32_t session_id_len) {
   CDM_DLOG() << "OpenCdmPlatformCdmiImpl::MediaKeySessionUpdate";
   MediaKeySessionUpdateResponse response;
@@ -69,7 +69,7 @@ MediaKeySessionUpdateResponse OpenCdmPlatformImpl::MediaKeySessionUpdate(
 }
 
 MediaKeySessionReleaseResponse OpenCdmPlatformImpl::MediaKeySessionRelease(
-    uint16_t *session_id_val, uint32_t session_id_len) {
+    char *session_id_val, uint32_t session_id_len) {
   CDM_DLOG() << "OpenCdmPlatformCdmiImpl::MediaKeySessionRelease";
   MediaKeySessionReleaseResponse response;
 
@@ -93,6 +93,11 @@ void OpenCdmPlatformImpl::MessageCallback(
                                       destination_url);
 }
 
+void OpenCdmPlatformImpl::OnKeyStatusUpdateCallback(
+    OpenCdmPlatformSessionId platform_session_id, std::string message
+    ) {
+  callback_receiver_->OnKeyStatusUpdateCallback(platform_session_id, message);
+}
 void OpenCdmPlatformImpl::ReadyCallback(
     OpenCdmPlatformSessionId platform_session_id) {
   callback_receiver_->ReadyCallback(platform_session_id);

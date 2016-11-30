@@ -29,20 +29,20 @@ struct rpc_request_create_session {
 };
 
 struct rpc_request_load_session {
-    uint16_t session_id <>;
+    char session_id <>;
 };
 
 struct rpc_request_session_update {
-    uint16_t session_id <>;
+    char session_id <>;
     uint8_t key <>;
 };
 
 struct rpc_request_session_release {
-    uint16_t session_id <>;
+    char session_id <>;
 };
 
 struct rpc_request_mediaengine_data {
-    uint16_t session_id <>;
+    char session_id <>;
     uint8_t auth_data <>;
     int32_t id_exchange_shmem;
     int32_t id_exchange_sem;
@@ -58,7 +58,7 @@ struct rpc_response_generic {
 
 struct rpc_response_create_session {
     int platform_val;
-    uint16_t session_id <>;
+    char session_id <>;
 };
 
 program OPEN_CDM {

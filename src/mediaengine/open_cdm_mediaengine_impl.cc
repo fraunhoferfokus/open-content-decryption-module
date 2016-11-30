@@ -21,13 +21,14 @@
 
 namespace media {
 
-OpenCdmMediaengineImpl::OpenCdmMediaengineImpl(uint16_t *session_id_val,
+OpenCdmMediaengineImpl::OpenCdmMediaengineImpl(char *session_id_val,
                                                uint32_t session_id_len) {
   media_engine_com_ = new RpcCdmMediaengineHandler(session_id_val,
                                                    session_id_len, 0, 0);
+  CDM_DLOG() << "Created new media engine impl ";
 }
 
-OpenCdmMediaengineImpl::OpenCdmMediaengineImpl(uint16_t *session_id_val,
+OpenCdmMediaengineImpl::OpenCdmMediaengineImpl(char *session_id_val,
                                                uint32_t session_id_len,
                                                uint8_t *auth_data_val,
                                                uint32_t auth_data_len) {
@@ -47,6 +48,7 @@ DecryptResponse OpenCdmMediaengineImpl::Decrypt(const uint8_t *pbIv,
                                                 const uint8_t *pbData,
                                                 uint32_t cbData, uint8_t *out,
                                                 uint32_t &out_size) {
+  printf("_------ Decrypt \n");
   CDM_DLOG() << "OpenCdmMediaengineImpl::Decrypt: ";
   DecryptResponse response;
 

@@ -38,16 +38,16 @@ class OpenCdmPlatform {
 
   // EME equivalent: media_keys_.loadSession()
   virtual MediaKeysLoadSessionResponse MediaKeysLoadSession(
-      uint16_t *session_id_val, uint32_t session_id_len) = 0;
+      char *session_id_val, uint32_t session_id_len) = 0;
 
   // EME equivalent: media_key_session_.update()
   virtual MediaKeySessionUpdateResponse MediaKeySessionUpdate(
-      const uint8 *pbKey, uint32 cbKey, uint16_t *session_id_val,
+      const uint8 *pbKey, uint32 cbKey, char *session_id_val,
       uint32_t session_id_len) = 0;
 
   // EME equivalent: media_key_session_.release()
   virtual MediaKeySessionReleaseResponse MediaKeySessionRelease(
-      uint16_t *session_id_val, uint32_t session_id_len) = 0;
+      char *session_id_val, uint32_t session_id_len) = 0;
 
 
   virtual ~OpenCdmPlatform() {

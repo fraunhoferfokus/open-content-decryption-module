@@ -32,35 +32,37 @@ class OpenCdmPlatformImpl : public OpenCdmPlatform,
   // on errors tear down media keys and media key session objects
 
   // EME equivalent: new MediaKeys()
-  virtual MediaKeysResponse MediaKeys(std::string key_system);
+  MediaKeysResponse MediaKeys(std::string key_system) override;
 
   // EME equivalent: media_keys_.createSession()
-  virtual MediaKeysCreateSessionResponse MediaKeysCreateSession(
+  MediaKeysCreateSessionResponse MediaKeysCreateSession(
       const std::string& init_data_type, const uint8_t* init_data,
-      int init_data_length);
+      int init_data_length) override;
 
   // EME equivalent: media_keys_.loadSession()
-  virtual MediaKeysLoadSessionResponse MediaKeysLoadSession(
-      uint16_t *session_id_val, uint32_t session_id_len);
+  MediaKeysLoadSessionResponse MediaKeysLoadSession(
+      char *session_id_val, uint32_t session_id_len) override;
 
   // EME equivalent: media_key_session_.update()
-  virtual MediaKeySessionUpdateResponse MediaKeySessionUpdate(
-      const uint8 *pbKey, uint32 cbKey, uint16_t *session_id_val,
-      uint32_t session_id_len);
+  MediaKeySessionUpdateResponse MediaKeySessionUpdate(
+      const uint8 *pbKey, uint32 cbKey, char *session_id_val,
+      uint32_t session_id_len) override;
 
   // EME equivalent: media_key_session_.release()
-  virtual MediaKeySessionReleaseResponse MediaKeySessionRelease(
-      uint16_t *session_id_val, uint32_t session_id_len);
+  MediaKeySessionReleaseResponse MediaKeySessionRelease(
+      char *session_id_val, uint32_t session_id_len) override;
 
   // OpenCdmComCallbackReceiver inheritance
-  virtual void ErrorCallback(OpenCdmPlatformSessionId platform_session_id,
-                             uint32_t sys_err, std::string err_msg);
-  virtual void MessageCallback(OpenCdmPlatformSessionId platform_session_id,
+  void ErrorCallback(OpenCdmPlatformSessionId platform_session_id,
+                             uint32_t sys_err, std::string err_msg) override;
+  void MessageCallback(OpenCdmPlatformSessionId platform_session_id,
                                std::string message,
-                               std::string destination_url);
-  virtual void ReadyCallback(OpenCdmPlatformSessionId platform_session_id);
+                               std::string destination_url) override;
+  void OnKeyStatusUpdateCallback(OpenCdmPlatformSessionId platform_session_id,
+                               std::string message) override;
+  void ReadyCallback(OpenCdmPlatformSessionId platform_session_id) override;
 
-  virtual ~OpenCdmPlatformImpl() {
+  ~OpenCdmPlatformImpl() override {
   }
   OpenCdmPlatformImpl(
       OpenCdmPlatformComCallbackReceiver *callback_receiver);

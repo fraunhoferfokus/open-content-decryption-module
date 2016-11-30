@@ -30,7 +30,7 @@
 namespace media {
 
 // Aliases for the version of the interfaces that this CDM implements.
-typedef cdm::ContentDecryptionModule_5 OpenCdmInterface;
+typedef cdm::ContentDecryptionModule_8 OpenCdmInterface;
 typedef OpenCdmInterface::Host OpenCdmHost;
 
 }  // namespace media

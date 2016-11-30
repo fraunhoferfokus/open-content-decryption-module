@@ -36,7 +36,7 @@ struct PlatformResponse {
 };
 
 struct OpenCdmPlatformSessionId {
-  uint16_t *session_id;  // TODO(ska): uint16_t oder uint8_t ? CDMi: 16
+  char *session_id;  // TODO(ska): uint16_t oder uint8_t ? CDMi: 16
   uint32_t session_id_len;
 };
 
