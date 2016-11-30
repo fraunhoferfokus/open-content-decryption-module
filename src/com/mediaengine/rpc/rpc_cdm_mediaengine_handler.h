@@ -35,14 +35,13 @@ class RpcCdmMediaengineHandler : public OpenCdmMediaengineCom {
  public:
   RpcCdmMediaengineHandler(uint16_t *session_id_val, uint32_t session_id_len,
                            uint8_t *auth_data_val, uint32_t auth_data_len);
-  virtual DecryptResponse Decrypt(const uint8_t *pbIv, uint32_t cbIv,
+  DecryptResponse Decrypt(const uint8_t *pbIv, uint32_t cbIv,
                                   const uint8_t *pbData, uint32_t cbData,
-                                  uint8_t *out, uint32_t &out_size);
+                                  uint8_t *out, uint32_t &out_size) override;
   //TODO (sph): make out const
-  virtual ~RpcCdmMediaengineHandler();
+  ~RpcCdmMediaengineHandler() override;
 
  private:
-  MediaEngineSessionKey sessionKeyPlaintext;
   MediaEngineSessionId sessionId;
 
   CLIENT *rpcClient;

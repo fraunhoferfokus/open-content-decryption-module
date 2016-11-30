@@ -38,11 +38,11 @@ class OpenCdmMediaengineImpl : public OpenCdmMediaengine {
                          uint8_t *auth_data_val, uint32_t auth_data_len);
 
   // synchronous decryption
-  virtual DecryptResponse Decrypt(const uint8_t *pbIv, uint32_t cbIv,
+  DecryptResponse Decrypt(const uint8_t *pbIv, uint32_t cbIv,
                                   const uint8_t *pbData, uint32_t cbData,
-                                  uint8_t *out, uint32_t &out_size);
+                                  uint8_t *out, uint32_t &out_size) override;
 
-  virtual ~OpenCdmMediaengineImpl();
+  ~OpenCdmMediaengineImpl() override;
  private:
   OpenCdmMediaengineCom *media_engine_com_;
 };

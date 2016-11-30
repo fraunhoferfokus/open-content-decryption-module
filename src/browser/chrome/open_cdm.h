@@ -54,58 +54,63 @@ class OpenCdm : public OpenCdmInterface,
     public OpenCdmPlatformComCallbackReceiver {
  public:
   OpenCdm(OpenCdmHost* host, const std::string& key_system);
-  virtual ~OpenCdm();
+  ~OpenCdm() override;
 
   // OpenDecryptor MediaKeys implementation
-  virtual void CreateSession(uint32 promise_id, const char* init_data_type,
-                             uint32 init_data_type_size, const uint8* init_data,
-                             uint32 init_data_size,
-                             cdm::SessionType session_type) OVERRIDE;
-  virtual void LoadSession(uint32 promise_id, const char* web_session_id,
-                           uint32_t web_session_id_length) OVERRIDE;
-  virtual void UpdateSession(uint32 promise_id, const char* web_session_id,
+  void CreateSessionAndGenerateRequest(uint32 promise_id,
+                                               cdm::SessionType session_type,
+                                               const char* init_data_type,
+                                               uint32 init_data_type_size,
+                                               const uint8* init_data,
+                                               uint32 init_data_size) override;
+  void LoadSession(uint32 promise_id,
+                           cdm::SessionType session_type,
+                           const char* web_session_id,
+                           uint32_t web_session_id_length) override;
+
+  void CloseSession(uint32 promise_id,
+                            const char* web_session_id,
+                            uint32_t web_session_id_length) override;
+
+  void UpdateSession(uint32 promise_id,
+                             const char* web_session_id,
                              uint32_t web_session_id_length,
-                             const uint8* response, uint32 response_size)
-                                 OVERRIDE;
-  virtual void ReleaseSession(uint32 promise_id, const char* web_session_id,
-                              uint32_t web_session_id_length) OVERRIDE;
-  virtual void SetServerCertificate(uint32 promise_id,
+                             const uint8* response,
+                             uint32 response_size) override;
+
+  void RemoveSession(uint32 promise_id,
+                             const char* web_session_id,
+                             uint32_t web_session_id_length) override;
+
+  void SetServerCertificate(uint32 promise_id,
                                     const uint8_t* server_certificate_data,
                                     uint32_t server_certificate_data_size)
-                                        OVERRIDE;
-  virtual void TimerExpired(void* context) OVERRIDE;
+                                        override;
+  void TimerExpired(void* context) override;
 
-  virtual cdm::Status Decrypt(const cdm::InputBuffer& encrypted_buffer,
-                              cdm::DecryptedBlock* decrypted_block) OVERRIDE;
-  virtual cdm::Status InitializeAudioDecoder(
-      const cdm::AudioDecoderConfig& audio_decoder_config) OVERRIDE;
-  virtual cdm::Status InitializeVideoDecoder(
-      const cdm::VideoDecoderConfig& video_decoder_config) OVERRIDE;
-  virtual void DeinitializeDecoder(cdm::StreamType decoder_type) OVERRIDE;
-  virtual void ResetDecoder(cdm::StreamType decoder_type) OVERRIDE;
-  virtual cdm::Status DecryptAndDecodeFrame(
-      const cdm::InputBuffer& encrypted_buffer, cdm::VideoFrame* video_frame)
-          OVERRIDE;
-  virtual cdm::Status DecryptAndDecodeSamples(
+  cdm::Status Decrypt(const cdm::InputBuffer& encrypted_buffer,
+                              cdm::DecryptedBlock* decrypted_block) override;
+  cdm::Status InitializeAudioDecoder(
+      const cdm::AudioDecoderConfig& audio_decoder_config) override;
+  cdm::Status InitializeVideoDecoder(
+      const cdm::VideoDecoderConfig& video_decoder_config) override;
+  void DeinitializeDecoder(cdm::StreamType decoder_type) override;
+  void ResetDecoder(cdm::StreamType decoder_type) override;
+  cdm::Status DecryptAndDecodeFrame(
+      const cdm::InputBuffer& encrypted_buffer,
+      cdm::VideoFrame* me)
+          override;
+  cdm::Status DecryptAndDecodeSamples(
       const cdm::InputBuffer& encrypted_buffer, cdm::AudioFrames* audio_frames)
-          OVERRIDE;
-  virtual void Destroy() OVERRIDE;
-  virtual void OnPlatformChallengeResponse(
-      const cdm::PlatformChallengeResponse& response) OVERRIDE;
-  virtual void OnQueryOutputProtectionStatus(uint32_t link_mask,
-                                             uint32_t output_protection_mask)
-                                                 OVERRIDE;
+          override;
+  void Destroy() override;
+  void OnPlatformChallengeResponse(
+      const cdm::PlatformChallengeResponse& response) override;
 
-  // OpenCdmPlatformCallbackReceiver
-  virtual void MessageCallback(OpenCdmPlatformSessionId platform_session_id,
-                               std::string message, std::string destination_url)
-                                   OVERRIDE;
-
-  virtual void ReadyCallback(OpenCdmPlatformSessionId platform_session_id)
-      OVERRIDE;
-
-  virtual void ErrorCallback(OpenCdmPlatformSessionId platform_session_id,
-                             uint32_t sys_err, std::string err_msg) OVERRIDE;
+  void OnQueryOutputProtectionStatus(
+      cdm::QueryResult result,
+      uint32_t link_mask,
+      uint32_t output_protection_mask) override;
 
  private:
   OpenCdmHost* host_;
@@ -113,25 +118,34 @@ class OpenCdm : public OpenCdmInterface,
   scoped_ptr<OpenCdmPlatform> platform_;
   std::map<std::string, OpenCdmPlatformSessionId> session_id_map;
 
+  // Todo: remove this. It is from old CDM
+  void ReadyCallback(OpenCdmPlatformSessionId platform_session_id) override;
+
+  void ErrorCallback(OpenCdmPlatformSessionId platform_session_id,
+                            uint32_t sys_err, std::string err_msg) override;
+  void MessageCallback(OpenCdmPlatformSessionId platform_session_id,
+                               std::string message,
+                               std::string destination_url) override;
   // ContentDecryptionModule callbacks.
   void OnSessionMessage(const std::string& web_session_id,
+                        MediaKeys::MessageType message_type,
                         const std::vector<uint8>& message,
-                        const GURL& destination_url);
-
-  void OnSessionReady(const std::string& web_session_id);
-
-  void OnSessionError(const std::string& web_session_id,
-                      MediaKeys::Exception exception_code, uint32 system_code,
-                      const std::string& error_message);
+                        const GURL& legacy_destination_url);
+  void OnSessionKeysChange(const std::string& web_session_id,
+                           bool has_additional_usable_key,
+                           CdmKeysInfo keys_info);
+  void OnSessionClosed(const std::string& web_session_id);
 
   // Handle the success/failure of a promise. These methods are responsible for
   // calling |host_| to resolve or reject the promise.
   void OnSessionCreated(uint32 promise_id, const std::string& web_session_id);
   void OnSessionLoaded(uint32 promise_id, const std::string& web_session_id);
-  void OnSessionUpdated(uint32 promise_id, const std::string& web_session_id);
-  void OnSessionReleased(uint32 promise_id, const std::string& web_session_id);
+  void OnPromiseResolved(uint32 promise_id);
   void OnPromiseFailed(uint32 promise_id, MediaKeys::Exception exception_code,
                        uint32 system_code, const std::string& error_message);
+
+ // Prepares next heartbeat message and sets a timer for it.
+  void ScheduleNextHeartBeat();
 
   // Decrypts the |encrypted_buffer| and puts the result in |decrypted_buffer|.
   // Returns cdm::kSuccess if decryption succeeded. The decrypted result is
