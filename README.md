@@ -40,9 +40,9 @@ For detailed internals of the OCDM architecture please refer to the [architectur
 Currently OCDM development is compatible with following Web browers:
 
 * Chromium / CEF
- * Linux
+  *  Linux
 * Opera SDK
- * Linux
+  *  Linux
 
 For more details see the [milestones](https://github.com/fraunhoferfokus/open-content-decryption-module/milestones) page.
 
